@@ -16,7 +16,7 @@ module.exports = (function() {
     routes.get('/by/vendor/all', authController.verifyToken, authController.isVendor, purchaseController.getAllByVendor);
     routes.get('/by/user/all', authController.verifyToken, authController.isUser, purchaseController.getAllByUser);
     routes.get('/by/:userId/:purchasedDate', authController.verifyToken, purchaseController.fetchAllByCreatedDateAndUserIdAndDelivered);
-
+   
     routes.get("/generate-invoice/:userId/:purchasedDate",authController.verifyToken,purchaseController.validaeForInvoice, PDFGenerator.createInvoice);
 
     

@@ -39,7 +39,7 @@ function insertIntoProduct(req, res) {
 		price: product.price,
 		type: product.type,
 		desc: product.desc,
-		quantity: product.quantity,
+		offer: product.offer,
 		size: product.size,
 		image: product.image,
 		userId: req.tokenInfo.userId

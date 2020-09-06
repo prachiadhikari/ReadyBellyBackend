@@ -1,3 +1,5 @@
+const { purchaseSchema } = require("../entity/PurchaseSchema");
+
 module.exports = (function () {
   "use strict";
 
@@ -455,6 +457,7 @@ module.exports = (function () {
     res.json({status: 500, message: "Invalid user ."})
   }
 
+
   
 
   
@@ -534,6 +537,7 @@ function fetchAllByCreatedDateAndUserIdAndDelivered(req, res, next) {
     fetchAllByProductId,
     cancelPurchase,
     statusUpdate,
+
     getAllByVendor,
     getAllByUser,
     validateStatusForUpdate,
