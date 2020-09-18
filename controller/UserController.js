@@ -191,6 +191,31 @@ function fetchAllUsers(req, res) {
 		res.json({ status: 500, message: "Unable to fetch users." });
 	});
 }
+function fetchAllByUserType(req, res, next) {
+	userSchema.userSchema
+	   .findAll({
+		 where: {
+		   user_type: {
+			 [Op.eq]: UserType.VENDOR
+		   },
+		 }, 
+	   })
+	   .then(
+		 function (result) {
+		   res.status(200);
+		   res.json({
+			 users: result,
+			 status: 200,
+			 message: "All vendors shown",
+		   });
+		 },
+		 function (err) {
+		   console.log(err);
+		   res.status(500);
+		   res.json({ status: 500, message: "Unable to fetch users." });
+		 }
+	   );
+   }
 function fetchUserByUserId(id) {
 	return userSchema.userSchema.findOne({
 	  where: {
@@ -280,4 +305,4 @@ function approveUser(req, res) {
 		});
 	}
   }
-module.exports = {validator, generateHash,checkEmail,updateUsers,deleteUser, fetchUserByUsername, fetchAllUsers, approveUser,fetchAllByUserId};
+module.exports = {validator, generateHash,checkEmail,updateUsers,deleteUser, fetchUserByUsername, fetchAllUsers, approveUser,fetchAllByUserType,fetchAllByUserId};
