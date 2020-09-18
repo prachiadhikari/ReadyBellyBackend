@@ -30,6 +30,7 @@ module.exports = (function () {
     var bookings = req.body.map((booking) => {
       booking.userId = req.tokenInfo.userId;
       booking.status = PurchaseStatusEnum.PENDING;
+      booking.price = booking.price * booking.quantity;
       return booking;
     });
 
@@ -518,7 +519,7 @@ function fetchAllByCreatedDateAndUserIdAndDelivered(req, res, next) {
           {
             model: ProductSchema.productSchema,
             as: "product",
-            attributes: ["name"]
+            attributes: ["name","price"]
           }
         ],
         where: {
