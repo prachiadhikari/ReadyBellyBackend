@@ -224,22 +224,34 @@ function searchProduct (req, res, next)  {
         where: {
             [Op.or]: [
                 {
-                    id : { [Op.eq]: req.params.search }
+                    id : { [Op.like]: "%" + req.params.search + "%" }
                 },
                 {
-                    name : { [Op.eq] : req.params.search }
+                    name : { [Op.like] : "%" + req.params.search + "%" }
                 },
                 {
-                    type : { [Op.eq] : req.params.search }
+                    type : { [Op.like] : "%" + req.params.search + "%"}
                 },
                 {
-                    size : { [Op.eq] : req.params.search }
-                },
+                    size : { [Op.like] : "%" + req.params.search + "%" }
+				},
+				{
+					'$user.fullname$' : {[Op.like] : "%" + req.params.search + "%"}
+				}
             ]
-        }
+		},
+		include: [
+			{
+				model: UserSchema.userSchema,
+				as: "user",
+				attributes: ['fullname', 'id']
+			}
+		]
     }).then(data => {
-        res.json(data)
-    }).catch(next)
+        res.json(data);
+    }).catch(err => {
+		console.log(err);
+	})
 };
 
 
