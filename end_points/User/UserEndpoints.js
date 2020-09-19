@@ -11,5 +11,7 @@ routes.post('/:userId/approve', authController.verifyToken, authController.isAdm
 routes.delete('/:id', authController.verifyToken, authController.isAdmin, userController.deleteUser);
 routes.get('/profile/:userId', authController.verifyToken, userController.fetchAllByUserId);
 routes.put('/update', authController.verifyToken, userController.validator, userController.updateUsers);
+routes.get('/type', userController.fetchAllByUserType);
+
 return routes;
 })();

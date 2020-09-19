@@ -216,14 +216,6 @@ function fetchAllUsers(req, res) {
 		res.json({ status: 500, message: "Unable to fetch users." });
 	});
 }
-function fetchUserByUsername(username) {
-	return userSchema.userSchema.findOne({
-	  where: {
-		email: username,
-		isApproved: true,
-	  },
-	});
-  }
 function fetchUserByUserId(id) {
 	return userSchema.userSchema.findOne({
 	  where: {
@@ -306,3 +298,4 @@ function approveUser(req, res) {
 	}
   }
 module.exports = {validator, generateHash,checkEmail,fetchAllByUserType,updateUsers,deleteUser, fetchUserByUsername, fetchAllUsers, approveUser,fetchAllByUserId};
+
