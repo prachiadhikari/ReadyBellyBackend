@@ -148,6 +148,31 @@ function updateUsers(req, res, next) {
 	});
   
   }
+  function fetchAllByUserType(req, res, next) {
+	userSchema.userSchema
+	   .findAll({
+		 where: {
+		   user_type: {
+			 [Op.eq]: UserType.VENDOR
+		   },
+		 }, 
+	   })
+	   .then(
+		 function (result) {
+		   res.status(200);
+		   res.json({
+			 users: result,
+			 status: 200,
+			 message: "All vendors shown",
+		   });
+		 },
+		 function (err) {
+		   console.log(err);
+		   res.status(500);
+		   res.json({ status: 500, message: "Unable to fetch users." });
+		 }
+	   );
+   }
 
 function fetchAllByUserId(req, res, next) {
 	console.log(req.params)
@@ -191,31 +216,6 @@ function fetchAllUsers(req, res) {
 		res.json({ status: 500, message: "Unable to fetch users." });
 	});
 }
-function fetchAllByUserType(req, res, next) {
-	userSchema.userSchema
-	   .findAll({
-		 where: {
-		   user_type: {
-			 [Op.eq]: UserType.VENDOR
-		   },
-		 }, 
-	   })
-	   .then(
-		 function (result) {
-		   res.status(200);
-		   res.json({
-			 users: result,
-			 status: 200,
-			 message: "All vendors shown",
-		   });
-		 },
-		 function (err) {
-		   console.log(err);
-		   res.status(500);
-		   res.json({ status: 500, message: "Unable to fetch users." });
-		 }
-	   );
-   }
 function fetchUserByUserId(id) {
 	return userSchema.userSchema.findOne({
 	  where: {
@@ -234,14 +234,6 @@ function fetchUserByUserId(id) {
 		console.log("Could not send email for reason :: " + err );
 		console.log(err);
 	} 
-}
-function fetchUserByUsername(username) {
-	return userSchema.userSchema.findOne({
-		where: {
-			email: username,
-			isApproved: true
-		} 
-	});
 }
 
 
@@ -305,4 +297,5 @@ function approveUser(req, res) {
 		});
 	}
   }
-module.exports = {validator, generateHash,checkEmail,updateUsers,deleteUser, fetchUserByUsername, fetchAllUsers, approveUser,fetchAllByUserType,fetchAllByUserId};
+module.exports = {validator, generateHash,checkEmail,fetchAllByUserType,updateUsers,deleteUser, fetchUserByUsername, fetchAllUsers, approveUser,fetchAllByUserId};
+
