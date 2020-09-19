@@ -223,6 +223,7 @@ function searchProduct (req, res, next)  {
     productSchema.productSchema.findAll({
         where: {
             [Op.or]: [
+				
                 {
                     id : { [Op.like]: "%" + req.params.search + "%" }
                 },
