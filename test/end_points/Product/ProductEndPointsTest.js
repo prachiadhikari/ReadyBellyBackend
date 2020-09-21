@@ -14,8 +14,8 @@ describe("Products API TDD Testing", function () {
     request(app)
       .post("/api/user/login")
       .send({
-        email: "biswash005@gmail.com",
-        password: "hello123",
+        email: "rujal1121311@gmail.com",
+        password: "rujal",
       })
       .then((res) => {
         console.log(res.message);
@@ -87,32 +87,32 @@ it('should fail, provided dummy token', (done) => {
  })   
 
 //test case 3: Delete product using token
-// it('should pass, Create new product and delete the same product', (done) => {
-//             request(app).post('/api/product/add')
-//                 .set("Authorization", `Bearer ${userToken}`)
-//                 .send({
-//                     name: "product name about to delete",
-//                     price: "Rs 111",
-//                     desc:"nice products",
-//                     type:"MENS",
-//                     quantity:"1",
-//                     size:"LARGE",
-//                     image: "product image about to delete",
-//                     user_id:"2",
-//                 })
-//                 .then((res) => {
-//                     let pid = res.body.pid
-//                     request(app).delete('/api/product/' + pid)
-//                         .set("Authorization", `Bearer ${userToken}`)
-//                         .then((res) => {
-//                             expect(res.status).to.equal(200);
-//                             expect(res.body.message).to.equal("success");
-//                             done();
-//                         })
-//                         .catch((err) => done(err));
-//                 })
-//                 .catch((err) => done(err));
-// })
+it('should pass, Create new product and delete the same product', (done) => {
+            request(app).post('/api/product/add')
+                .set("Authorization", `Bearer ${userToken}`)
+                .send({
+                    name: "product name about to delete",
+                    price: "Rs 111",
+                    desc:"nice products",
+                    type:"MENS",
+                    quantity:"1",
+                    size:"LARGE",
+                    image: "product image about to delete",
+                    user_id:"2",
+                })
+                .then((res) => {
+                    let pid = res.body.pid
+                    request(app).delete('/api/product/' + pid)
+                        .set("Authorization", `Bearer ${userToken}`)
+                        .then((res) => {
+                            expect(res.status).to.equal(200);
+                            expect(res.body.message).to.equal("success");
+                            done();
+                        })
+                        .catch((err) => done(err));
+                })
+                .catch((err) => done(err));
+})
 
 
 //test case 4: When product name is not provided
