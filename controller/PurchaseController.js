@@ -1,10 +1,13 @@
 const { purchaseSchema } = require("../entity/PurchaseSchema");
+const PaymentStatusEnum = require("../enums/PaymentStatusEnum");
 
 module.exports = (function () {
   "use strict";
 
   const PurchaseSchema = require("../entity/PurchaseSchema");
   const PurchaseStatusEnum = require("../enums/PurchaseStatusEnum");
+  const PaymentStatusEnum = require("../enums/PaymentStatusEnum");
+
   const UserSchema = require("../entity/UserSchema.js");
   const ProductSchema = require("../entity/ProductSchema.js");
   const UserTypeEnum = require("../enums/UserTypeEnum");
@@ -30,6 +33,8 @@ module.exports = (function () {
     var bookings = req.body.map((booking) => {
       booking.userId = req.tokenInfo.userId;
       booking.status = PurchaseStatusEnum.PENDING;
+      booking.payment = PaymentStatusEnum.CASH_ON_DELIVERY;
+
       return booking;
     });
 
@@ -165,6 +170,7 @@ module.exports = (function () {
       .update(
         {
           status: PurchaseStatusEnum.CANCELED,
+          payment:PaymentStatusEnum.CANCELLED,
         },
         {
           where: {
@@ -188,7 +194,55 @@ module.exports = (function () {
       );
     P;
   }
+  function paymentUpdate(req, res) {
+    console.log(req.params);
+    var purchase = req.body;
+    console.log(purchase);
+    if(UserTypeEnum.USER === req.tokenInfo.userType) {
+      PurchaseSchema.purchaseSchema
+      .update(
+        {
+          payment: req.body.payment
+        },
+        {
+          where: {
+            id: req.params.purchaseId,
+          },
+        }
+      )
+      .then(success, error);
+    } else {
+      PurchaseSchema.purchaseSchema
+      .update(
+        {
+          payment: req.body.payment,
+        },
+        {
+          where: {
+            id: req.params.purchaseId,
+          },
+        }
+      )
+      .then(success, error);
+    }
+    
+      let success = (success) => {
+        res.status(200);
+        res.json({
+          status: 200,
+          message: "Successfully updated purchase payment",
+        });
+      }
 
+      let error = (err) => {
+        console.log(err);
+        res.status(500);
+        res.json({
+          status: 500,
+          message: "Unable to update payment status",
+        });
+      }
+  }
   function statusUpdate(req, res) {
     console.log(req.params);
     var purchase = req.body;
@@ -198,6 +252,7 @@ module.exports = (function () {
       .update(
         {
           status: req.body.status,
+          payment: req.body.payment,
           userRemarks: req.body.feedback
         },
         {
@@ -212,6 +267,7 @@ module.exports = (function () {
       .update(
         {
           status: req.body.status,
+          payment: req.body.payment,
           vendorRemarks: req.body.feedback
         },
         {
@@ -369,6 +425,25 @@ module.exports = (function () {
         .then(success, error);
     }
   }
+  function validatePaymentForUpdate(req, res, next) {
+    console.log("Inside validate Payment For Update")
+      console.log(req.body.payment);
+      console.log(req.tokenInfo.userType);
+      console.log(req.tokenInfo.userId);
+      console.log(req.tokenInfo.email);
+
+        console.log(PaymentStatusEnum.exists(req.body.payment));
+      if (!isNullOrUndefined(req.body.payment) && PaymentStatusEnum.exists(req.body.payment)) {
+      console.log("Payment not empty")
+        if (req.tokenInfo.userType === UserTypeEnum.VENDOR || (req.tokenInfo.userType === UserTypeEnum.USER && req.body.status === PurchaseStatusEnum.CANCELED)) {
+        // verify if the product id sent is valid for current user 
+        validateProductIdIsOfCurrentUser(req.tokenInfo.userId, req.tokenInfo.userType, req.params.purchaseId, res, next);
+        return;
+      }
+    }
+    res.status(500);
+    res.json({status: 500, message: "Invalid Payment Status."})
+  }
 
   function validateStatusForUpdate(req, res, next) {
     console.log("Inside validate Status For Update")
@@ -470,7 +545,7 @@ module.exports = (function () {
       id: booking.id
     } 
   }).then(function (previousBook) {
-    if(!PurchaseStatusEnum.exists(booking.status)){
+    if(!PurchaseStatusEnum.exists(booking.status || booking.payment)){
       res.status(400);
       res.json({status: 200, message: "status update failed.", "booking": booking})
     }
@@ -478,6 +553,7 @@ module.exports = (function () {
     if (previousBook) {
       previousBook.update({
         status: booking.status,
+        payment:booking.payment,
       }).then(function (product) {
         console.log("Successfuly updated");
         console.log(product);
@@ -537,10 +613,10 @@ function fetchAllByCreatedDateAndUserIdAndDelivered(req, res, next) {
     fetchAllByProductId,
     cancelPurchase,
     statusUpdate,
-
+paymentUpdate,
     getAllByVendor,
     getAllByUser,
-    validateStatusForUpdate,
+    validateStatusForUpdate,validatePaymentForUpdate,
     updateBooking,validaeForInvoice,
     fetchAllByCreatedDateAndUserIdAndDelivered
   };
