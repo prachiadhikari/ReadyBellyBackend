@@ -12,6 +12,8 @@ module.exports = (function() {
     routes.get('/myp/:productId',authController.verifyToken,authController.isVendor, purchaseController.fetchAllByProductId);
     // routes.post('/:purchaseId/cancel', authController.verifyToken,authController.isUser, purchaseController.cancelPurchase);
     routes.post('/:purchaseId/status-update', authController.verifyToken, purchaseController.validateStatusForUpdate, purchaseController.statusUpdate);
+    routes.post('/:purchaseId/payment-update', authController.verifyToken, purchaseController.validatePaymentForUpdate, purchaseController.paymentUpdate);
+
     routes.post('/booking/update', purchaseController.updateBooking);
     routes.get('/by/vendor/all', authController.verifyToken, authController.isVendor, purchaseController.getAllByVendor);
     routes.get('/by/user/all', authController.verifyToken, authController.isUser, purchaseController.getAllByUser);
