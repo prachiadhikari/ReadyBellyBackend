@@ -147,14 +147,6 @@ function fetchProductByProductName(productName) {
 		}
 	});
 }
-function fetchProductByProductSize(productSize) {
-	return productSchema.productSchema.findOne({
-		where: {
-			productSize: productSize
-		}
-	});
-}
-
 function fetchAllProducts(req, res, next) {
 	console.log(req.params);
 	productSchema.productSchema.findAll({
@@ -256,4 +248,4 @@ function searchProduct (req, res, next)  {
 };
 
 
-module.exports = { validator,fetchAllByProductId, fetchProductByProductName, deleteProduct, updateIntoProduct,fetchProductByProductSize, fetchAllByUserId, fetchAllProducts, insertIntoProduct, searchProduct };
+module.exports = { validator,fetchAllByProductId, fetchProductByProductName, deleteProduct, updateIntoProduct, fetchAllByUserId, fetchAllProducts, insertIntoProduct, searchProduct };
