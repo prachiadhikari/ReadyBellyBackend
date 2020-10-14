@@ -14,8 +14,9 @@ describe("Products API TDD Testing", function () {
     request(app)
       .post("/api/user/login")
       .send({
-        email: "p@gmail.com",
-        password: "krishna",
+        email: "prachi@gmail.com",
+        password: "prachi",
+
       })
       .then((res) => {
         console.log(res.message);
@@ -34,9 +35,11 @@ it('should Pass, Add Product', (done) => {
     request(app).post('/api/product/add')
     .set('Authorization', `Bearer ${userToken}`)
     .send({
+
         name: "Chicken Momo",
         price: "2000",
         desc: "Available",
+
         type: "MOMO",
         size: "LARGE",
         offer:"2",
@@ -55,6 +58,7 @@ it('should fail, provided dummy token', (done) => {
         request(app).post('/api/product/add')
             .set('Authorization', 'dummytoken')
            .send({
+
             name: "Chicken Momo",
             price: "2000",
             desc: "Available",
@@ -63,6 +67,7 @@ it('should fail, provided dummy token', (done) => {
             offer:"2",
             image:"dd",
             user_id:"2",
+
        
         }).then((res) => {
             expect(res.status).to.equal(403);
@@ -120,6 +125,7 @@ it('should Fail, Add Product because no Product name provided', (done) => {
     request(app).post('/api/product/add')
     .set('Authorization', `Bearer ${userToken}`)
     .send({
+
         name: "",
         price: "2000",
         desc: "Available",
@@ -128,6 +134,7 @@ it('should Fail, Add Product because no Product name provided', (done) => {
         offer:"2",
         image:"dd",
         user_id:"2",
+
        
         }).then((res) => {
             expect(res.status).to.equal(500);
@@ -142,6 +149,7 @@ it('should Fail, Add Product because no Product Type provided', (done) => {
     request(app).post('/api/product/add')
     .set('Authorization', `Bearer ${userToken}`)
     .send({
+
         name: "Chicken Momo",
         price: "2000",
         desc: "Available",
@@ -150,7 +158,7 @@ it('should Fail, Add Product because no Product Type provided', (done) => {
         offer:"2",
         image:"dd",
         user_id:"2",
-       
+
         }).then((res) => {
             expect(res.status).to.equal(500);
             expect(res.body.message).to.equal("Product Type is required");
@@ -165,14 +173,18 @@ it('should Fail, Add Product because no Product Type provided', (done) => {
       .put("/api/product/update")
       .set("Authorization", `Bearer ${userToken}`)
       .send({
+
         name: "Chicken Momo update",
         price: "2000",
         desc: "Available",
+
         type: "MOMO",
         size: "LARGE",
         offer:"2",
         image:"dd",
+
         user_id:"2",
+
       })
       .then((res) => {
         expect(res.statusCode).to.equal(200);
