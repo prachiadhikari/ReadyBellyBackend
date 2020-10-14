@@ -14,8 +14,8 @@ describe("Products API TDD Testing", function () {
     request(app)
       .post("/api/user/login")
       .send({
-        email: "biswash005@gmail.com",
-        password: "hello123",
+        email: "prachi@gmail.com",
+        password: "prachi",
       })
       .then((res) => {
         console.log(res.message);
@@ -34,12 +34,12 @@ it('should Pass, Add Product', (done) => {
     request(app).post('/api/product/add')
     .set('Authorization', `Bearer ${userToken}`)
     .send({
-        name: "TSHIRT",
-        price: "2000",
-        desc: "Nice TSHIRT",
-        type: "MENS",
+        name: "MOmo",
+        price: "200",
+        desc: "Nice ",
+        type: "MOMO",
         size: "LARGE",
-        quantity:"2",
+        offer:"2",
         image:"dd",
         user_id:"1",
        
@@ -55,14 +55,14 @@ it('should fail, provided dummy token', (done) => {
         request(app).post('/api/product/add')
             .set('Authorization', 'dummytoken')
            .send({
-		        name: "TSHIRT",
-		        price: "2000",
-		        desc: "Nice TSHIRT",
-		        type: "MENS",
-		        size: "LARGE",
-		        quantity:"2",
-		        image:"dd",
-		        user_id:"1",
+		        name: "MOmo",
+        price: "200",
+        desc: "Nice ",
+        type: "MOMO",
+        size: "LARGE",
+        offer:"2",
+        image:"dd",
+        user_id:"1",
        
         }).then((res) => {
             expect(res.status).to.equal(403);
@@ -120,14 +120,14 @@ it('should Fail, Add Product because no Product name provided', (done) => {
     request(app).post('/api/product/add')
     .set('Authorization', `Bearer ${userToken}`)
     .send({
-        name: "",
-        price: "2000",
-        desc: "Nice TSHIRT",
-        type: "MENS",
-        size: "LARGE",
-        quantity:"2",
-        image:"dd",
-        user_id:"1",
+      name: "",
+      price: "200",
+      desc: "Nice ",
+      type: "MOMO",
+      size: "LARGE",
+      offer:"2",
+      image:"dd",
+      user_id:"1",
        
         }).then((res) => {
             expect(res.status).to.equal(500);
@@ -142,14 +142,14 @@ it('should Fail, Add Product because no Product Type provided', (done) => {
     request(app).post('/api/product/add')
     .set('Authorization', `Bearer ${userToken}`)
     .send({
-        name: "TSHIRT",
-        price: "2000",
-        desc: "Nice TSHIRT",
-        type: "",
-        size: "LARGE",
-        quantity:"2",
-        image:"dd",
-        user_id:"2",
+      name: "MOmo",
+      price: "200",
+      desc: "Nice ",
+      type: "",
+      size: "LARGE",
+      offer:"2",
+      image:"dd",
+      user_id:"1",
        
         }).then((res) => {
             expect(res.status).to.equal(500);
@@ -165,14 +165,14 @@ it('should Fail, Add Product because no Product Type provided', (done) => {
       .put("/api/product/update")
       .set("Authorization", `Bearer ${userToken}`)
       .send({
-        name: "TSHIRT UPDATED",
-        price: "2000",
-        desc: "Nice TSHIRT",
-        type: "MENS",
+        name: "MOmo chicken",
+        price: "200",
+        desc: "Nice ",
+        type: "MOMO",
         size: "LARGE",
-        quantity: "2",
-        image: "dd",
-        id: 1
+        offer:"2",
+        image:"dd",
+        user_id:"1",
       })
       .then((res) => {
         expect(res.statusCode).to.equal(200);
