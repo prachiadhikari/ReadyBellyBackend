@@ -12,8 +12,10 @@ describe("Purchase API TDD Testing", function () {
     request(app)
       .post("/api/user/login")
       .send({
+
         email: "prachi@gmail.com",
         password: "prachi",
+
       })
       .then((res) => {
         console.log(res.message);
@@ -34,7 +36,9 @@ it('should Pass, Book Purchase', (done) => {
        status:"PENDING",
         price: "2000",
         quantity:"2",
+
         user_id:"1",
+
        
         }).then((res) => {
             expect(res.status).to.equal(200);

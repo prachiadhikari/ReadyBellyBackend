@@ -1,18 +1,18 @@
+
 const app = require('../../../index.js');
 const request = require('supertest');
 const expect = require('chai').expect;
 
-// test case 1: Success registration
 it('should Pass, Register User', (done) => {
     request(app).post('/api/user/registration')
     .send({
-        fullname: "Rujal Manandhar",
-        address1: "Kathmandu",
-        mobile: "981234567",
+        fullname: "Prachi Adhikari",
+        address1: "kalanki",
+        mobile: "9816798765",
         phone: "014350123",
-        password: "rujal",
-        user_type: "USER",
-        email: "rujal1121311@gmail.com"
+        password: "admin123",
+        user_type: "ADMIN",
+        email: "admin@gmail.com"
         }).then((res) => {
             expect(res.status).to.equal(200);
             expect(res.body.message).to.equal("User successfully inserted!");
@@ -20,20 +20,20 @@ it('should Pass, Register User', (done) => {
         }).catch (err => done(err));
 });
 
-//test case 2: When email is not provided
+// //test case 2: When email is not provided
 it('should Fail, Register User because no email provided', (done) => {
     request(app)
     .post('/api/user/registration')
     .send({
-        fullname: "Rujal Manandhar",
+        fullname: "Prachi Adhikari",
         address1: "Kathmandu",
         mobile: "981234567",
         phone: "014350123",
-        password: "rujal",
+        password: "prachi",
         user_type: "USER",
         email: ''
         }).then((res) => {
-            console.log("********AT SUCESS");
+            console.log("NO EMAIL");
             expect(res.status).to.equal(500);
             expect(res.body.message).to.equal("email and password is required");
             done();
@@ -51,9 +51,9 @@ it('should Fail, Register User because no fullname provided', (done) => {
         address1: "Kathmandu",
         mobile: "981234567",
         phone: "014350123",
-        password: "rujal",
+        password: "prachi",
         user_type: "USER",
-        email: 'wegewgeg'
+        email: 'pa@gmail.com'
         }).then((res) => {
             console.log("********AT SUCESS");
             expect(res.status).to.equal(500);
@@ -68,8 +68,8 @@ it('should Fail, Register User because no fullname provided', (done) => {
 it('should Pass, Login User', (done) => {
     request(app).post('/api/user/login')
     .send({
-        email: "biswash005@gmail.com",
-        password: "hello123"
+        email: "op@gmail.com",
+        password: "prachi"
         }).then((res) => {
             console.log(res.message);
             expect(res.status).to.equal(200);
@@ -85,7 +85,7 @@ it('should Fail,Login User failed  because no email is provided', (done) => {
     request(app).post('/api/user/login')
     .send({
         email: "",
-        password: "rujal"
+        password: "prachi"
         }).then((res) => {
             expect(res.status).to.equal(400);
             expect(res.body.message).to.equal("email or password not found.");
@@ -99,8 +99,8 @@ it('should Fail,Login User failed  because no email is provided', (done) => {
 it('should Fail,Login failed because no password is provided', (done) => {
     request(app).post('/api/user/login')
     .send({
-        email: "",
-        password: "rujal"
+        email: "op@gmail.com",
+        password: ""
         }).then((res) => {
             
             expect(res.status).to.equal(400);

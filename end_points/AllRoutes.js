@@ -6,6 +6,7 @@ module.exports = ( function() {
     var uploadEndPoints = require("./Upload/UploadEndpoint");
     var purchaseEndPoints = require("./Purchase/PurchaseEndPoints");
     var feedbackEndPoints = require("./Feedback/FeedbackEndPoints");
+    var contactEndPoints = require("./Contact/ContactEndPoints");
 
     
 
@@ -14,6 +15,7 @@ module.exports = ( function() {
     routes.use("/upload", uploadEndPoints);
     routes.use("/purchase", purchaseEndPoints);
     routes.use("/feedback", feedbackEndPoints);
+    routes.use("/contact", contactEndPoints);
 
 
     return routes;
