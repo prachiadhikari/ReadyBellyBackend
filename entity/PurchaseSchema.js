@@ -32,6 +32,10 @@ var purchaseSchema = sequelize.define('purchase',
 	status: {
 		type: Sequelize.TEXT,
 		allowNull: false	
+	},
+	payment: {
+		type: Sequelize.TEXT,
+		allowNull: false	
     }
 }, {
 	//Options

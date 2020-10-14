@@ -10,12 +10,13 @@ let id ='';
 
 describe("Products API TDD Testing", function () {
   before(function (done) {
-    console.log("***************************Efwewevwvre************");
+    console.log("***************************LOGIN************");
     request(app)
       .post("/api/user/login")
       .send({
         email: "prachi@gmail.com",
         password: "prachi",
+
       })
       .then((res) => {
         console.log(res.message);
@@ -34,14 +35,16 @@ it('should Pass, Add Product', (done) => {
     request(app).post('/api/product/add')
     .set('Authorization', `Bearer ${userToken}`)
     .send({
-        name: "MOmo",
-        price: "200",
-        desc: "Nice ",
+
+        name: "Chicken Momo",
+        price: "2000",
+        desc: "Available",
+
         type: "MOMO",
         size: "LARGE",
         offer:"2",
         image:"dd",
-        user_id:"1",
+        user_id:"2",
        
         }).then((res) => {
             expect(res.status).to.equal(200);
@@ -55,14 +58,16 @@ it('should fail, provided dummy token', (done) => {
         request(app).post('/api/product/add')
             .set('Authorization', 'dummytoken')
            .send({
-		        name: "MOmo",
-        price: "200",
-        desc: "Nice ",
-        type: "MOMO",
-        size: "LARGE",
-        offer:"2",
-        image:"dd",
-        user_id:"1",
+
+            name: "Chicken Momo",
+            price: "2000",
+            desc: "Available",
+            type: "MOMO",
+            size: "LARGE",
+            offer:"2",
+            image:"dd",
+            user_id:"2",
+
        
         }).then((res) => {
             expect(res.status).to.equal(403);
@@ -87,32 +92,32 @@ it('should fail, provided dummy token', (done) => {
  })   
 
 //test case 3: Delete product using token
-// it('should pass, Create new product and delete the same product', (done) => {
-//             request(app).post('/api/product/add')
-//                 .set("Authorization", `Bearer ${userToken}`)
-//                 .send({
-//                     name: "product name about to delete",
-//                     price: "Rs 111",
-//                     desc:"nice products",
-//                     type:"MENS",
-//                     quantity:"1",
-//                     size:"LARGE",
-//                     image: "product image about to delete",
-//                     user_id:"2",
-//                 })
-//                 .then((res) => {
-//                     let pid = res.body.pid
-//                     request(app).delete('/api/product/' + pid)
-//                         .set("Authorization", `Bearer ${userToken}`)
-//                         .then((res) => {
-//                             expect(res.status).to.equal(200);
-//                             expect(res.body.message).to.equal("success");
-//                             done();
-//                         })
-//                         .catch((err) => done(err));
-//                 })
-//                 .catch((err) => done(err));
-// })
+it('should pass, Create new product and delete the same product', (done) => {
+            request(app).post('/api/product/add')
+                .set("Authorization", `Bearer ${userToken}`)
+                .send({
+                    name: "product name about to delete",
+                    price: "2000",
+                    desc: "Available",
+                    type: "MOMO",
+                    size: "LARGE",
+                    offer:"2",
+                    image:"product image about to delete",
+                    user_id:"2",
+                })
+                .then((res) => {
+                    let pid = res.body.pid
+                    request(app).delete('/api/product/' + pid)
+                        .set("Authorization", `Bearer ${userToken}`)
+                        .then((res) => {
+                            expect(res.status).to.equal(200);
+                            expect(res.body.message).to.equal("success");
+                            done();
+                        })
+                        .catch((err) => done(err));
+                })
+                .catch((err) => done(err));
+})
 
 
 //test case 4: When product name is not provided
@@ -120,14 +125,16 @@ it('should Fail, Add Product because no Product name provided', (done) => {
     request(app).post('/api/product/add')
     .set('Authorization', `Bearer ${userToken}`)
     .send({
-      name: "",
-      price: "200",
-      desc: "Nice ",
-      type: "MOMO",
-      size: "LARGE",
-      offer:"2",
-      image:"dd",
-      user_id:"1",
+
+        name: "",
+        price: "2000",
+        desc: "Available",
+        type: "MOMO",
+        size: "LARGE",
+        offer:"2",
+        image:"dd",
+        user_id:"2",
+
        
         }).then((res) => {
             expect(res.status).to.equal(500);
@@ -142,15 +149,16 @@ it('should Fail, Add Product because no Product Type provided', (done) => {
     request(app).post('/api/product/add')
     .set('Authorization', `Bearer ${userToken}`)
     .send({
-      name: "MOmo",
-      price: "200",
-      desc: "Nice ",
-      type: "",
-      size: "LARGE",
-      offer:"2",
-      image:"dd",
-      user_id:"1",
-       
+
+        name: "Chicken Momo",
+        price: "2000",
+        desc: "Available",
+        type: "",
+        size: "LARGE",
+        offer:"2",
+        image:"dd",
+        user_id:"2",
+
         }).then((res) => {
             expect(res.status).to.equal(500);
             expect(res.body.message).to.equal("Product Type is required");
@@ -165,14 +173,18 @@ it('should Fail, Add Product because no Product Type provided', (done) => {
       .put("/api/product/update")
       .set("Authorization", `Bearer ${userToken}`)
       .send({
-        name: "MOmo chicken",
-        price: "200",
-        desc: "Nice ",
+
+        name: "Chicken Momo update",
+        price: "2000",
+        desc: "Available",
+
         type: "MOMO",
         size: "LARGE",
         offer:"2",
         image:"dd",
-        user_id:"1",
+
+        user_id:"2",
+
       })
       .then((res) => {
         expect(res.statusCode).to.equal(200);

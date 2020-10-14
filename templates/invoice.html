@@ -100,23 +100,23 @@
     </style>
 </head>
 
-<body>
-    <div class="invoice-box">
+<body  style="background-color:#c9ccd1;">
+    <div class="invoice-box" style="border:2px solid DodgerBlue;">
         <table cellpadding="0" cellspacing="0">
             <tr class="top">
                 <td colspan="2">
                     <table>
                         <tr>
                             <td class="title">
-                                <!-- <img src="https://www.sparksuite.com/images/logo.png"
-                                    style="width:100%; max-width:300px;">
-                                let's put our logo here
-                                -->
+                                <img src="Image/logo.png"
+                                    style="width:100%; max-width:300px;border-radius: 30px;">
+                               
+                                
                             </td>
 
                             <td>
-                                Invoice #: 123<br>
-                                Created: {{createdDate}}
+                                <strong> #: 123</strong><br>
+                                <strong>{{createdDate}}</strong> 
                             </td>
                         </tr>
                     </table>
@@ -128,20 +128,20 @@
                     <table>
                         <tr>
                             <td>
-                                ReadyBelly<br>
-                                Softwarica College of IT and E-commerce<br>
-                                Dillibazaar Kathmandu
+                                <strong  style="background-color:#c9ccd1;">ReadyBelly</strong><br>
+                                <strong> College of IT and E-commerce</strong><br>
+                                <strong>Dillibazaar Kathmandu</strong>
                             </td>
 
                             <td>
-                                {{user.fullname}} <br />
-                                {{user.address1}}
+                                <strong>{{user.fullname}} </strong><br />
+                                <strong>{{user.address1}}</strong>
                             </td>
                         </tr>
                     </table>
                 </td>
             </tr>
-            <tr class="heading">
+            <tr class="heading" style="background-color:#8db5f7;">
                 <td>
                     Items
                 </td>
@@ -161,7 +161,7 @@
                 <td></td>
 
                 <td>
-                    Total: ${{total}}
+                    Total: Rs{{total}} /-
                 </td>
             </tr>
         </table>

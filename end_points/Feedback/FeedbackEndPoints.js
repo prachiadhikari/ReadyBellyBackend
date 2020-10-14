@@ -6,6 +6,8 @@ module.exports = (function() {
 
 
     routes.post('/add', authController.verifyToken, feedbackController.validator, feedbackController.insertIntoFeedback);
+    routes.get('/:userId/all', feedbackController.fetchAllByUserId);
+    routes.get('/all',feedbackController.fetchAllFeedback);
    
     
     return routes;

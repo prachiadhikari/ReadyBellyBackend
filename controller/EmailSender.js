@@ -25,7 +25,7 @@ let transporter = getTransporter();
   console.log("Inside send email");
     // send mail with defined transport object
     let info = await transporter.sendMail({
-      from: '"City Sports 👻" <citysports@dev.com>', // sender address
+      from: '"ReadyBelly 👻" <readybelly@dev.com>', // sender address
       to: email.to, // list of receivers
       subject: email.subject, // Subject line
       text: email.text, // plain text body
